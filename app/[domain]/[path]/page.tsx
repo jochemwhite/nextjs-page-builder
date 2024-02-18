@@ -1,4 +1,4 @@
-import FunnelEditor from "@/app/(main)/subaccount/[subaccountId]/funnels/[funnelId]/editor/[funnelPageId]/_components/funnel-editor";
+import FunnelEditor from "@/app/(main)/editor/_components/funnel-editor";
 import EditorProvider from "@/components/providers/editor/editor-provider";
 import { getDomainContent } from "@/lib/querys";
 import { notFound } from "next/navigation";

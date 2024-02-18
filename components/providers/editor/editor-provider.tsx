@@ -10,47 +10,9 @@ import {
 import { EditorAction } from "./editor-actions";
 import { createContext } from "react";
 import { FunnelPage } from "@prisma/client";
+import { DeviceTypes, Editor, EditorElement, EditorProps, EditorState, HistoryState, PageDetails } from "@/types/pageEditor";
 
-export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
-export type EditorElement = {
-  id: string;
-  styles: CSSProperties;
-  name: string;
-  type: EditorBtns;
-  content:
-    | EditorElement[]
-    | {
-        href?: string;
-        innerText?: string;
-        src?: string;
-        typeText?: TypeTextP;
-        quoteStyles?: QuoteProps;
-      };
-};
-export type QuoteProps = {
-  styles?: CSSProperties;
-};
-export type TypeTextP = "Parrafo" | "Title" | "SubTitle";
-
-export type Editor = {
-  liveMode: boolean;
-  elements: EditorElement[];
-  selectedElement: EditorElement;
-  device: DeviceTypes;
-  previewMode: boolean;
-  funnelPageId: string;
-};
-
-export type HistoryState = {
-  history: Editor[];
-  currentIndex: number;
-};
-
-export type EditorState = {
-  editor: Editor;
-  history: HistoryState;
-};
 
 const initialEditorState: EditorState["editor"] = {
   elements: [
@@ -348,19 +310,13 @@ const editorReducer = (
   }
 };
 
-export type EditorContextData = {
-  device: DeviceTypes;
-  previewMode: boolean;
-  setPreviewMode: (previewMode: boolean) => void;
-  setDevice: (device: DeviceTypes) => void;
-};
 
 export const EditorContext = createContext<{
   state: EditorState;
   dispatch: Dispatch<EditorAction>;
   subaccountId: string;
   funnelId: string;
-  pageDetails: FunnelPage | null;
+  pageDetails: PageDetails | null;
 }>({
   state: initialState,
   dispatch: () => undefined,
@@ -369,12 +325,7 @@ export const EditorContext = createContext<{
   pageDetails: null,
 });
 
-type EditorProps = {
-  children: ReactNode;
-  subaccountId: string;
-  funnelId: string;
-  pageDetails: FunnelPage;
-};
+
 
 const EditorProvider = (props: EditorProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialState);

@@ -232,3 +232,13 @@ export const defaultStyles: React.CSSProperties = {
   textAlign: "left",
   opacity: "100%",
 };
+
+const onekingdomDB = "658fabb7b076a84d06d2";
+
+
+export const databases = {
+  pages: {
+    databaseID: onekingdomDB,
+    collectionID: "65cf612a10b631f9d906",
+  }
+} 

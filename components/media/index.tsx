@@ -1,4 +1,3 @@
-import { GetMediaFiles } from "@/lib/types";
 import MediaUploadButton from "./upload-button";
 import {
   Command,
@@ -10,9 +9,10 @@ import {
 } from "@/components/ui/command";
 import MediaCard from "./media-card";
 import { FolderSearch } from "lucide-react";
+import { getMediaFiles } from "@/types/database/media";
 
 type Props = {
-  data: GetMediaFiles;
+  data: getMediaFiles;
   subaccountId: string;
 };
 

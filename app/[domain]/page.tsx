@@ -2,7 +2,7 @@ import EditorProvider from "@/components/providers/editor/editor-provider";
 import { db } from "@/lib/db";
 import { getDomainContent } from "@/lib/querys";
 import { notFound } from "next/navigation";
-import FunnelEditor from "../(main)/subaccount/[subaccountId]/funnels/[funnelId]/editor/[funnelPageId]/_components/funnel-editor";
+import FunnelEditor from "../(main)/editor/_components/funnel-editor";
 
 export default async function PageDomain({
   params,
