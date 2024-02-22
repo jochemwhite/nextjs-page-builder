@@ -14,8 +14,7 @@ export default function Page() {
     try {
       setLoading(true);
       const response = await createNewPage({
-        name: "new page",
-       
+        name: "new page",       
         content: null,
         createdAt: new Date(),
         order: 1,
