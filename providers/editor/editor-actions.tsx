@@ -58,9 +58,4 @@ export type EditorAction =
         withLive: boolean;
       };
     }
-  | {
-      type: "SET_FUNNELPAGE_ID";
-      payload: {
-        funnelPageId: string;
-      };
-    };
+  

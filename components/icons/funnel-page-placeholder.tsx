@@ -1,4 +1,4 @@
-const FunnelPagePlaceholder = () => {
+const PagePlaceholder = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -241,4 +241,4 @@ const FunnelPagePlaceholder = () => {
   );
 };
 
-export default FunnelPagePlaceholder;
+export default PagePlaceholder;

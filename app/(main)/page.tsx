@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import usePageEditor from "@/hooks/usePageEditor";
@@ -14,7 +14,7 @@ export default function Page() {
     try {
       setLoading(true);
       const response = await createNewPage({
-        name: "new page",       
+        name: "new page",
         content: null,
         createdAt: new Date(),
         order: 1,
@@ -38,5 +38,9 @@ export default function Page() {
     }
   }
 
-  return <Button onClick={handleClick}>New Page</Button>;
+  return (
+    <>
+      <Button onClick={handleClick}>New Page</Button>;
+    </>
+  );
 }
