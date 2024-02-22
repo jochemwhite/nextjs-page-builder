@@ -2,7 +2,6 @@
 
 import { useEditor } from "@/components/providers/editor/editor-provider";
 import { Button } from "@/components/ui/button";
-import { getFunnelPageDetails } from "@/lib/querys";
 import { cn } from "@/lib/utils";
 import { EyeOff } from "lucide-react";
 import { useEffect } from "react";
@@ -16,7 +15,7 @@ type Props = {
   pageDetails: PageDetails | undefined;
 };
 
-export default function FunnelEditor({ pageDetails, liveMode }: Props) {
+export default function PageEditor({ pageDetails, liveMode }: Props) {
   const { state, dispatch } = useEditor();
 
   useEffect(() => {
@@ -29,16 +28,14 @@ export default function FunnelEditor({ pageDetails, liveMode }: Props) {
       });
     }
   }, [liveMode]);
-  //CHALLENGER: make this more performant
   useEffect(() => {
     const fetchData = async () => {
+      if (!pageDetails) return;
 
-      if(!pageDetails) return;
-   
       dispatch({
         type: "LOAD_DATA",
         payload: {
-          elements: pageDetails.content ? JSON.parse(pageDetails?.content) : "",
+          elements: pageDetails.content ? JSON.parse(pageDetails?.content) : null,
           withLive: !!liveMode,
         },
       });
@@ -119,7 +116,7 @@ export default function FunnelEditor({ pageDetails, liveMode }: Props) {
                 (state.editor.elements[0].content as Array<EditorElement>).map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={state.editor.liveMode || state.editor.previewMode}>
                     {(provided, snapshot) => (
-                      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} suppressContentEditableWarning={true}>
                         <Recursive element={item} />
                       </div>
                     )}

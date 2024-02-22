@@ -1,6 +1,5 @@
 "use client";
 import {
-  EditorElement,
   useEditor,
 } from "@/components/providers/editor/editor-provider";
 import {
@@ -10,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
+import { EditorElement } from "@/types/pageEditor";
 import { BoxSelect } from "lucide-react";
 import React from "react";
 

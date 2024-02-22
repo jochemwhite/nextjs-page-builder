@@ -2,13 +2,12 @@
 
 import { CustomModal } from "@/components/global/custom-modal";
 import MediaComponent from "@/components/media";
-import { EditorElement } from "@/components/providers/editor/editor-provider";
 import { useModal } from "@/components/providers/modal-provider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getMedia } from "@/lib/querys";
-import { PropertisElementHandler } from "@/lib/types";
+
+import { EditorElement, PropertisElementHandler } from "@/types/pageEditor";
 import {
   AlignVerticalJustifyCenter,
   ChevronsLeftRightIcon,
@@ -29,16 +28,16 @@ export default function ImageProperties({
   element,
   handleChangeCustomValues,
   handleOnChanges,
-  subAccountId,
 }: Props) {
+
+
   const { setOpen } = useModal();
   const content = !Array.isArray(element.content) ? element.content : null;
   const onOpenModalImages = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    const result = await getMedia(subAccountId);
     setOpen(
       <CustomModal title="Your images" subheading="Copy or upload your images">
-        <MediaComponent data={result} subaccountId={subAccountId} />
+        <MediaComponent buckedId="658fad6a1cfcc5125a99"  />
       </CustomModal>
     );
   };

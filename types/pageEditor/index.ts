@@ -2,16 +2,16 @@ import { EditorBtns } from "@/lib/constants";
 import { CSSProperties, ReactNode } from "react";
 
 export interface PageDetails {
-  $id?: string
+
   name: string;
   pathName: string;
   createdAt: Date;
   updatedAt: Date;
   visits: number;
-  content: string;
+  content: string | null;
   order: number;
   previewImage: string | null
-  funnelId: string;
+
 }
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
@@ -66,6 +66,13 @@ export type EditorContextData = {
 export type EditorProps = {
   children: ReactNode;
   subaccountId: string;
-  funnelId: string;
+  // funnelId: string;
   pageDetails: PageDetails;
+};
+
+export type PropertisElementHandler = {
+  target: {
+    id: string;
+    value: string;
+  };
 };

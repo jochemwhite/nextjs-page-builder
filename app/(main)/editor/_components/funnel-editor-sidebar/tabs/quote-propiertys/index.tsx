@@ -1,5 +1,4 @@
-import { EditorElement } from "@/components/providers/editor/editor-provider";
-import { PropertisElementHandler } from "@/lib/types";
+import { EditorElement, PropertisElementHandler } from "@/types/pageEditor";
 import React from "react";
 
 type Props = {

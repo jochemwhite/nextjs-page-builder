@@ -1,6 +1,5 @@
 "use client";
 import { ColorPicker } from "@/components/global/color-picker";
-import { EditorElement } from "@/components/providers/editor/editor-provider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
@@ -11,7 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PropertisElementHandler } from "@/lib/types";
+
+import { EditorElement, PropertisElementHandler } from "@/types/pageEditor";
 
 type Props = {
   element: EditorElement;

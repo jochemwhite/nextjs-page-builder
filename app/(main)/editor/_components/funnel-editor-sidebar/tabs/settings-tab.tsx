@@ -39,8 +39,8 @@ import {
 } from "lucide-react";
 import { ChangeEvent, ChangeEventHandler, useRef } from "react";
 import TextPropertys from "./_text-propertys";
-import { PropertisElementHandler } from "@/lib/types";
 import ImageProperties from "./image-propertys";
+import { PropertisElementHandler } from "@/types/pageEditor";
 
 export default function SettingsTab() {
   const { dispatch, state, subaccountId } = useEditor();

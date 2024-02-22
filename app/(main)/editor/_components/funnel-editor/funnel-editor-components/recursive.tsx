@@ -4,7 +4,6 @@ import TextComponent from "./text";
 import Container from "./container";
 import VideoComponent from "./video";
 import LinkComponent from "./link-component";
-import ContactFormComponent from "./contact-form-component";
 import ImageComponent from "./image-component";
 import QuoteComponent from "./quote-component";
 import { EditorElement } from "@/types/pageEditor";
@@ -27,8 +26,7 @@ export default function Recursive({ element }: Props) {
       return <Container element={element} />;
     case "link":
       return <LinkComponent element={element} />;
-    case "contactForm":
-      return <ContactFormComponent element={element} />;
+
 
     case "image":
       return <ImageComponent element={element} />;

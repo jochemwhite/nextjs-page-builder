@@ -15,7 +15,7 @@ type Props = {
   subaccountId: string;
 };
 
-export default function FunnelEditorSidebar({ subaccountId }: Props) {
+export default function FunnelEditorSidebar() {
   const { state, dispatch } = useEditor();
   return (
     <Sheet open={true} modal={false}>
@@ -50,7 +50,7 @@ export default function FunnelEditorSidebar({ subaccountId }: Props) {
               <SettingsTab />
             </TabsContent>
             <TabsContent value="Media">
-              <MediaBucketTab subaccountId={subaccountId} />
+              <MediaBucketTab  />
             </TabsContent>
             <TabsContent value="Components">
               <SheetHeader className="text-left p-6">

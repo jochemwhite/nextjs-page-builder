@@ -5,52 +5,42 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { toast } from "@/components/ui/use-toast";
 import usePageEditor from "@/hooks/usePageEditor";
-import { upsertFunnelPage } from "@/lib/querys";
 import { cn } from "@/lib/utils";
-import { DeviceTypes, PageDetails } from "@/types/pageEditor";
+import { PageDetailStorage } from "@/types/database/pages";
+import { DeviceTypes } from "@/types/pageEditor";
 import { ArrowLeftCircle, EyeIcon, Laptop, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FocusEventHandler, useEffect } from "react";
 
 type Props = {
-  funnelId: string;
-  funnelPageDetails: PageDetails;
-  subaccountId: string;
+  PageDetails: PageDetailStorage;
 };
 
-export default function FunnelEditorNavigation({ funnelId, funnelPageDetails, subaccountId }: Props) {
+export default function PageEditorNavigation({ PageDetails }: Props) {
   const router = useRouter();
   const { dispatch, state } = useEditor();
   const { createNewPage, updatePage } = usePageEditor();
 
-  useEffect(() => {
-    dispatch({
-      type: "SET_FUNNELPAGE_ID",
-      payload: {
-        funnelPageId: "sadfasf",
-      },
-    });
-  }, [funnelPageDetails]);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "SET_FUNNELPAGE_ID",
+  //     payload: {
+  //       funnelPageId: "sadfasf",
+  //     },
+  //   });
+  // }, [PageDetails]);
 
   const handleOnBlurTitleChange: FocusEventHandler<HTMLInputElement> = async (event) => {
-    if (event.target.value === funnelPageDetails.name) return;
+    if (event.target.value === PageDetails.name) return;
     if (event.target.value) {
-      await upsertFunnelPage(
-        subaccountId,
-        {
-          id: "asdfadsf",
-          name: event.target.value,
-          order: funnelPageDetails.order,
-        },
-        funnelId
-      );
+      await updatePage({ ...PageDetails, name: event.target.value }, PageDetails.$id);
       toast({
         title: "Success",
-        description: "Saved Funnel Page title",
+        description: "Saved Page title",
       });
       router.refresh();
     } else {
@@ -58,7 +48,7 @@ export default function FunnelEditorNavigation({ funnelId, funnelPageDetails, su
         title: "Oppse!",
         description: "You need to have a title",
       });
-      event.target.value = funnelPageDetails.name;
+      event.target.value = PageDetails.name;
     }
   };
 
@@ -80,13 +70,13 @@ export default function FunnelEditorNavigation({ funnelId, funnelPageDetails, su
     const content = JSON.stringify(state.editor.elements);
     try {
       const newPage = {
-        ...funnelPageDetails,
+        ...PageDetails,
         content,
       };
 
-      if (funnelPageDetails.$id) {
+      if (PageDetails.$id) {
         try {
-          await updatePage(newPage, funnelPageDetails.$id);
+          await updatePage(newPage, PageDetails.$id);
         } catch (error) {
           console.log(error);
         }
@@ -114,12 +104,12 @@ export default function FunnelEditorNavigation({ funnelId, funnelPageDetails, su
         })}
       >
         <aside className="flex items-center gap-4 max-w-[206px] w-[300px]">
-          <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
+          <Link href={`/admin/pages`}>
             <ArrowLeftCircle />
           </Link>
           <div className="flex flex-col w-full">
-            <Input defaultValue={funnelPageDetails.name} className="border-none h-5 m-0 p-0 text-lg" onBlur={handleOnBlurTitleChange} />
-            <span className="text-sm text-muted-foreground">Path: /{funnelPageDetails.pathName}</span>
+            <Input defaultValue={PageDetails.name} className="border-none h-5 m-0 p-0 text-lg" onBlur={handleOnBlurTitleChange} />
+            <span className="text-sm text-muted-foreground">Path: /{PageDetails.pathName}</span>
           </div>
         </aside>
         <aside>
@@ -172,7 +162,7 @@ export default function FunnelEditorNavigation({ funnelId, funnelPageDetails, su
               Publish
             </div>
             <span className="text-muted-foreground text-sm">
-              Laste updated {new Date(funnelPageDetails.updatedAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+              Laste updated {new Date(PageDetails.updatedAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
             </span>
           </div>
           <Button onClick={handleOnSave}>Save</Button>

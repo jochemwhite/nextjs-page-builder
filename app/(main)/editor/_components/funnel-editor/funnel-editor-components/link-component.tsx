@@ -1,11 +1,11 @@
 "use client";
 import {
-  EditorElement,
   useEditor,
 } from "@/components/providers/editor/editor-provider";
 import { Badge } from "@/components/ui/badge";
 import { EditorBtns } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { EditorElement } from "@/types/pageEditor";
 import { Trash } from "lucide-react";
 import Link from "next/link";
 import React from "react";

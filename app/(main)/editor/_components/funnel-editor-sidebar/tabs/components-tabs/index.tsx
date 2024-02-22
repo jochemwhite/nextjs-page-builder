@@ -11,8 +11,7 @@ import ContainerPlaceHolder from "./container-placeholder";
 import VideoPlaceholder from "./video-placeholder";
 import TwoColumnsPlaceHolder from "./two-columns-placeholder";
 import LinkPLaceholder from "./link-placeholder";
-import ContactFormComponentPlaceHolder from "./contact-form-pladeholder";
-import CheckoutPlaceHolder from "./checkout-placeholder";
+
 import ImageComponentPlaceHolder from "./image-components-placeholder";
 import QuoteComponentPlaceHolder from "./quote-component-placeholder";
 
@@ -55,18 +54,8 @@ export default function ComponentsTab({}: Props) {
       group: "elements",
       id: "link",
     },
-    {
-      Component: <ContactFormComponentPlaceHolder />,
-      label: "Contact",
-      id: "contactForm",
-      group: "elements",
-    },
-    {
-      Component: <CheckoutPlaceHolder />,
-      label: "Checkout",
-      id: "paymentForm",
-      group: "elements",
-    },
+
+
     {
       Component: <ImageComponentPlaceHolder />,
       label: "Image",
