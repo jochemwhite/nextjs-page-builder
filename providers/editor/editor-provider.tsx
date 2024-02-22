@@ -23,7 +23,6 @@ const initialEditorState: EditorState["editor"] = {
   device: "Desktop",
   previewMode: false,
   liveMode: false,
-  funnelPageId: "",
 };
 
 const initialHistoryState: HistoryState = {
@@ -256,12 +255,10 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
 export const EditorContext = createContext<{
   state: EditorState;
   dispatch: Dispatch<EditorAction>;
-  subaccountId: string;
   pageDetails: PageDetails | null;
 }>({
   state: initialState,
   dispatch: () => undefined,
-  subaccountId: "",
   pageDetails: null,
 });
 
@@ -272,8 +269,6 @@ const EditorProvider = (props: EditorProps) => {
       value={{
         state,
         dispatch,
-        subaccountId: props.subaccountId,
-
         pageDetails: props.pageDetails,
       }}
     >
@@ -284,7 +279,7 @@ const EditorProvider = (props: EditorProps) => {
 export const useEditor = () => {
   const context = useContext(EditorContext);
   if (!context) {
-    throw new Error("useEditor hook must be used within the edir provider");
+    throw new Error("useEditor hook must be used within the editor provider");
   }
   return context;
 };

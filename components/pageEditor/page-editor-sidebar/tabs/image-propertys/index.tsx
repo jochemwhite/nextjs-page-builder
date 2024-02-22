@@ -2,7 +2,7 @@
 
 import { CustomModal } from "@/components/global/custom-modal";
 import MediaComponent from "@/components/media";
-import { useModal } from "@/components/providers/modal-provider";
+import { useModal } from "@/providers/modal-provider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";

@@ -1,7 +1,7 @@
 "use client";
 import {
   useEditor,
-} from "@/components/providers/editor/editor-provider";
+} from "@/providers/editor/editor-provider";
 import {
   Accordion,
   AccordionContent,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor } from "@/components/providers/editor/editor-provider";
+import { useEditor } from "@/providers/editor/editor-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -25,14 +25,7 @@ export default function PageEditorNavigation({ PageDetails }: Props) {
   const { dispatch, state } = useEditor();
   const { createNewPage, updatePage } = usePageEditor();
 
-  // useEffect(() => {
-  //   dispatch({
-  //     type: "SET_FUNNELPAGE_ID",
-  //     payload: {
-  //       funnelPageId: "sadfasf",
-  //     },
-  //   });
-  // }, [PageDetails]);
+  
 
   const handleOnBlurTitleChange: FocusEventHandler<HTMLInputElement> = async (event) => {
     if (event.target.value === PageDetails.name) return;

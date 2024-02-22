@@ -1,7 +1,7 @@
 "use client";
 
 import { ColorPicker } from "@/components/global/color-picker";
-import { useEditor } from "@/components/providers/editor/editor-provider";
+import { useEditor } from "@/providers/editor/editor-provider";
 import {
   Accordion,
   AccordionContent,

@@ -42,7 +42,7 @@ export type Editor = {
   selectedElement: EditorElement;
   device: DeviceTypes;
   previewMode: boolean;
-  funnelPageId: string;
+  
 };
 
 export type HistoryState = {
@@ -65,8 +65,6 @@ export type EditorContextData = {
 
 export type EditorProps = {
   children: ReactNode;
-  subaccountId: string;
-  // funnelId: string;
   pageDetails: PageDetails;
 };
 

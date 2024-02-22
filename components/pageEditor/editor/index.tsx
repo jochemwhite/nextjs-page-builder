@@ -1,13 +1,13 @@
 "use client";
 
-import { useEditor } from "@/components/providers/editor/editor-provider";
+import { useEditor } from "@/providers/editor/editor-provider";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EyeOff } from "lucide-react";
 import { useEffect } from "react";
-import Recursive from "./funnel-editor-components/recursive";
+import Recursive from "./page-editor-components/recursive";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import Container from "./funnel-editor-components/container";
+import Container from "./page-editor-components/container";
 import { EditorElement, PageDetails } from "@/types/pageEditor";
 
 type Props = {
@@ -83,11 +83,14 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
       },
     });
   };
+
+
+
   return (
     <div
       onClick={handleClick}
-      className={cn("use-automation-zoom-in h-full overflow-scroll mr-[385px] bg-background transition-all rounded-md relative", {
-        "!p-0 !mr-0": state.editor.previewMode === true || state.editor.liveMode === true,
+      className={cn("use-automation-zoom-in h-full  mr-[385px] bg-background transition-all rounded-md relative", {
+        "!p-0 !mr-0": state.editor.previewMode === true,
         "!w-[850px]": state.editor.device === "Tablet",
         "!w-[450px]": state.editor.device === "Mobile",
         "w-full": state.editor.device === "Desktop",
@@ -109,12 +112,12 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
         </div>
       )}
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
+        <Droppable droppableId="droppable" isDropDisabled={state.editor.liveMode} isCombineEnabled={state.editor.liveMode}>
           {(provided, snapshot) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
               {Array.isArray(state.editor.elements) &&
                 (state.editor.elements[0].content as Array<EditorElement>).map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={state.editor.liveMode || state.editor.previewMode}>
+                  <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={state.editor.liveMode}>
                     {(provided, snapshot) => (
                       <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} suppressContentEditableWarning={true}>
                         <Recursive element={item} />
@@ -122,7 +125,7 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
                     )}
                   </Draggable>
                 ))}
-              {provided.placeholder}
+              {/* {provided.placeholder} */}
             </div>
           )}
         </Droppable>

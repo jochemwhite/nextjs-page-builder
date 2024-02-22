@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { useModal } from "@/components/providers/modal-provider";
+import { useModal } from "@/providers/modal-provider";
 import {
   Dialog,
   DialogContent,

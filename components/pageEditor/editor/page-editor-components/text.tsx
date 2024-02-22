@@ -1,7 +1,7 @@
 "use client";
 import {
   useEditor,
-} from "@/components/providers/editor/editor-provider";
+} from "@/providers/editor/editor-provider";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { EditorElement } from "@/types/pageEditor";

@@ -3,7 +3,7 @@
 import {
 
   useEditor,
-} from "@/components/providers/editor/editor-provider";
+} from "@/providers/editor/editor-provider";
 import { Badge } from "@/components/ui/badge";
 import { EditorBtns } from "@/lib/constants";
 import { cn } from "@/lib/utils";

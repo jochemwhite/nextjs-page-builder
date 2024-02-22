@@ -1,22 +1,17 @@
-import FunnelEditor from "@/app/(main)/editor/_components/funnel-editor";
-import EditorProvider from "@/components/providers/editor/editor-provider";
+import EditorProvider from "@/providers/editor/editor-provider";
 import { getPageData } from "@/lib/querys";
 import { notFound } from "next/navigation";
+import PageEditor from "@/components/pageEditor/editor";
 
 export default async function PagePath({ params }: { params: { path: string } }) {
-  const pageDetails = await getPageData(params.path)
-  
-  if (!pageDetails || pageDetails.total === 0 ) {
+  const pageDetails = await getPageData(params.path);
+
+  if (!pageDetails || pageDetails.total === 0) {
     return notFound();
   }
   return (
-    <EditorProvider
-      subaccountId="sdf"
-      pageDetails={pageDetails.documents[0]}
-      funnelId="sdf"
-    >
-      <FunnelEditor pageDetails={pageDetails.documents[0]} liveMode={true} />
+    <EditorProvider pageDetails={pageDetails.documents[0]}>
+      <PageEditor pageDetails={pageDetails.documents[0]} liveMode={true} />
     </EditorProvider>
-
   );
 }

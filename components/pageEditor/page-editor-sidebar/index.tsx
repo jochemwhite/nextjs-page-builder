@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor } from "@/components/providers/editor/editor-provider";
+import { useEditor } from "@/providers/editor/editor-provider";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,7 @@ type Props = {
   subaccountId: string;
 };
 
-export default function FunnelEditorSidebar() {
+export default function PageEditorSidebar() {
   const { state, dispatch } = useEditor();
   return (
     <Sheet open={true} modal={false}>

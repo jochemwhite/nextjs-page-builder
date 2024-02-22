@@ -1,7 +1,6 @@
-"use client";
 import {
   useEditor,
-} from "@/components/providers/editor/editor-provider";
+} from "@/providers/editor/editor-provider";
 import { Badge } from "@/components/ui/badge";
 import { EditorBtns } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -13,12 +12,9 @@ type Props = {
   element: EditorElement;
 };
 
-export default function ImageComponent({ element }: Props) {
-  const { state, dispatch } = useEditor();
-  const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
-    if (type == null) return;
-    e.dataTransfer.setData("componentType", type);
-  };
+export default function QuoteComponent({ element }: Props) {
+  const { dispatch, state } = useEditor();
+  const styles = element.styles;
   const handleOnCLickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch({
@@ -28,7 +24,9 @@ export default function ImageComponent({ element }: Props) {
       },
     });
   };
-  const styles = element.styles;
+  const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
+    e.stopPropagation();
+  };
   const handleDeleteElement = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch({
@@ -42,20 +40,22 @@ export default function ImageComponent({ element }: Props) {
   const liveMode = state.editor.liveMode;
   const isPreview = state.editor.previewMode;
   const canDrag = !liveMode || !isPreview;
-  console.log(canDrag);
-
   const content = !Array.isArray(element.content) ? element.content : null;
+  if (content == null) return null;
   return (
     <div
+      onClick={handleOnCLickBody}
       style={styles}
       draggable={canDrag}
-      onDragStart={(e) => handleDragStart(e, "link")}
-      onClick={handleOnCLickBody}
-      className={cn(" w-full  relative text-[16px] transition-all", {
-        "!border-blue-500": isElementSelected,
-        "!border-solid": isElementSelected,
-        "border-dashed border-[1px] border-slate-300": !liveMode,
-      })}
+      onDragStart={(e) => handleDragStart(e, "quote")}
+      className={cn(
+        "p-[2px] w-full m-[5px] relative text-[16px] transition-all",
+        {
+          "!border-blue-500": isElementSelected,
+          "!border-solid": isElementSelected,
+          "border-dashed border-[1px] border-slate-300": !liveMode,
+        }
+      )}
     >
       {isElementSelected && !liveMode && (
         <Badge className="absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg">
@@ -63,17 +63,28 @@ export default function ImageComponent({ element }: Props) {
         </Badge>
       )}
 
-      <picture>
-        <img
-          src={content?.src}
-          alt="image"
-          width={styles.width}
-          height={styles.height}
-          style={{
-            ...styles,
+      <div style={content?.quoteStyles?.styles} className="cursor-pointer">
+        <span
+          contentEditable={!state.editor.liveMode}
+          onBlur={(e) => {
+            const spanElemtn = e.target;
+            dispatch({
+              type: "UPDATE_ELEMENT",
+              payload: {
+                elementDetails: {
+                  ...element,
+                  content: {
+                    ...content,
+                    innerText: spanElemtn.innerText,
+                  },
+                },
+              },
+            });
           }}
-        />
-      </picture>
+        >
+          {content?.innerText}
+        </span>
+      </div>
 
       {isElementSelected && !liveMode && (
         <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">

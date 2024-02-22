@@ -1,9 +1,9 @@
 "use client";
-import { useEditor } from "@/components/providers/editor/editor-provider";
+import { useEditor } from "@/providers/editor/editor-provider";
 import { Badge } from "@/components/ui/badge";
 import { EditorBtns, defaultStyles } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { use, useEffect } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { Trash } from "lucide-react";
@@ -18,10 +18,12 @@ export default function Container({ element }: Props) {
   const selectItemAndNotLiveMode = state.editor.selectedElement.id === id && !state.editor.liveMode;
   const isLiveMode = state.editor.liveMode;
   const isPreview = state.editor.previewMode;
-  const canDrag = !isLiveMode || !isPreview;
+  const canDrag = !isLiveMode;
+
   const handleOnDrop = (e: React.DragEvent, type: string) => {
     e.stopPropagation();
     if (!canDrag) return;
+
     const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
     switch (componentType) {
       case "text":
