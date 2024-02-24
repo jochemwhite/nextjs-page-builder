@@ -1,8 +1,8 @@
 import { EditorBtns } from "@/lib/constants";
+import { LucideIcon } from "lucide-react";
 import { CSSProperties, ReactNode } from "react";
 
 export interface PageDetails {
-
   name: string;
   pathName: string;
   createdAt: Date;
@@ -10,8 +10,7 @@ export interface PageDetails {
   visits: number;
   content: string | null;
   order: number;
-  previewImage: string | null
-
+  previewImage: string | null;
 }
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
@@ -42,7 +41,6 @@ export type Editor = {
   selectedElement: EditorElement;
   device: DeviceTypes;
   previewMode: boolean;
-  
 };
 
 export type HistoryState = {
@@ -54,7 +52,6 @@ export type EditorState = {
   editor: Editor;
   history: HistoryState;
 };
-
 
 export type EditorContextData = {
   device: DeviceTypes;
@@ -74,3 +71,23 @@ export type PropertisElementHandler = {
     value: string;
   };
 };
+
+export type ElementSidebar = {
+  icon: LucideIcon;
+  label: string;
+  id: string;
+  name: string;
+  type: EditorBtns;
+  group: "layout" | "elements";
+  defaultPayload: EditorElement;
+  component?: ({ element }: {element: EditorElement}) => JSX.Element;
+};
+
+export interface Element {
+  Placeholder: Placeholder;
+}
+
+export interface Placeholder {
+  Type: EditorBtns;
+  Icon: LucideIcon;
+}

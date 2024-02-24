@@ -2,23 +2,10 @@
 
 import { ColorPicker } from "@/components/global/color-picker";
 import { useEditor } from "@/providers/editor/editor-provider";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -43,7 +30,7 @@ import ImageProperties from "./image-propertys";
 import { PropertisElementHandler } from "@/types/pageEditor";
 
 export default function SettingsTab() {
-  const { dispatch, state, subaccountId } = useEditor();
+  const { dispatch, state } = useEditor();
   const handleChangeCustomValues = (e: PropertisElementHandler) => {
     const settingProperty = e.target.id;
     const value = e.target.value;
@@ -86,19 +73,12 @@ export default function SettingsTab() {
   const defaultValueOpacity = [
     typeof state.editor.selectedElement.styles?.opacity === "number"
       ? state.editor.selectedElement.styles?.opacity
-      : parseFloat(
-          (state.editor.selectedElement.styles?.opacity ?? "0").replace("%", "")
-        ) ?? 0,
+      : parseFloat((state.editor.selectedElement.styles?.opacity ?? "0").replace("%", "")) ?? 0,
   ];
   const defulValueBorderRaidus = [
     typeof state.editor.selectedElement.styles.borderRadius === "number"
       ? state.editor.selectedElement.styles.borderRadius
-      : parseFloat(
-          (state.editor.selectedElement.styles?.borderRadius ?? "0").replace(
-            "%",
-            ""
-          )
-        ) ?? 0,
+      : parseFloat((state.editor.selectedElement.styles?.borderRadius ?? "0").replace("%", "")) ?? 0,
   ];
 
   const onChangeColorBg = (color: string) => {
@@ -114,26 +94,24 @@ export default function SettingsTab() {
     <Accordion
       type="multiple"
       className="w-full"
-      defaultValue={["Typography", "Dimesions", "Decorations", "Flexbox"]}
+      // defaultValue={["Typography", "Dimesions", "Decorations", "Flexbox"]}
     >
       <AccordionItem value="Custom" className="px-6 py-0">
         <AccordionTrigger className="!no-underline">Custom</AccordionTrigger>
         <AccordionContent>
-          {state.editor.selectedElement.type === "link" &&
-            !Array.isArray(state.editor.selectedElement.content) && (
-              <div className="flex flex-col gap-2">
-                <p className="flex flex-col p-2">Link Path</p>
-                <Input
-                  id="href"
-                  placeholder="https:domain.example.com/pathname"
-                  onChange={handleChangeCustomValues}
-                  value={state.editor.selectedElement.content?.href}
-                />
-              </div>
-            )}
+          {state.editor.selectedElement.type === "link" && !Array.isArray(state.editor.selectedElement.content) && (
+            <div className="flex flex-col gap-2">
+              <p className="flex flex-col p-2">Link Path</p>
+              <Input
+                id="href"
+                placeholder="https:domain.example.com/pathname"
+                onChange={handleChangeCustomValues}
+                value={state.editor.selectedElement.content?.href}
+              />
+            </div>
+          )}
           {state.editor.selectedElement.type === "image" && (
             <ImageProperties
-              subAccountId={subaccountId}
               handleOnChanges={handleOnChanges}
               handleChangeCustomValues={handleChangeCustomValues}
               element={state.editor.selectedElement}
@@ -142,9 +120,7 @@ export default function SettingsTab() {
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Typography" className="px-6 py-0 border-y-[1px]">
-        <AccordionTrigger className="!no-underline">
-          Typography
-        </AccordionTrigger>
+        <AccordionTrigger className="!no-underline">Typography</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             <p className="text-muted-foreground">Text Aling</p>
@@ -160,28 +136,16 @@ export default function SettingsTab() {
               value={state.editor.selectedElement.styles.textAlign}
             >
               <TabsList className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
-                <TabsTrigger
-                  value="left"
-                  className="size-10 p-0 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="left" className="size-10 p-0 data-[state=active]:bg-muted">
                   <AlignLeft size={18} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="right"
-                  className="size-10 p-0 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="right" className="size-10 p-0 data-[state=active]:bg-muted">
                   <AlignRight size={18} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="center"
-                  className="size-10 p-0 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="center" className="size-10 p-0 data-[state=active]:bg-muted">
                   <AlignCenter size={18} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="justify"
-                  className="size-10 p-0 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="justify" className="size-10 p-0 data-[state=active]:bg-muted">
                   <AlignJustify size={18} />
                 </TabsTrigger>
               </TabsList>
@@ -189,11 +153,7 @@ export default function SettingsTab() {
           </div>
           <div className="flex flex-col gap-2">
             <p className="text-muted-foreground">Font Family</p>
-            <Input
-              id="DM Sans"
-              onChange={handleOnChanges}
-              value={state.editor.selectedElement.styles.fontFamily}
-            />
+            <Input id="DM Sans" onChange={handleOnChanges} value={state.editor.selectedElement.styles.fontFamily} />
           </div>
           <div className="flex gap-4">
             <div>
@@ -223,12 +183,7 @@ export default function SettingsTab() {
             </div>
             <div>
               <Label className="text-muted-foreground">Size</Label>
-              <Input
-                placeholder="px"
-                id="fontSize"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.fontSize}
-              />
+              <Input placeholder="px" id="fontSize" onChange={handleOnChanges} value={state.editor.selectedElement.styles.fontSize} />
             </div>
           </div>
           {state.editor.selectedElement.type == "text" && (
@@ -241,9 +196,7 @@ export default function SettingsTab() {
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Dimensions" className="px-6 py-0">
-        <AccordionTrigger className="!no-underline">
-          Dimensions
-        </AccordionTrigger>
+        <AccordionTrigger className="!no-underline">Dimensions</AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -251,21 +204,11 @@ export default function SettingsTab() {
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Height</Label>
-                    <Input
-                      id="height"
-                      placeholder="px"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.height}
-                    />
+                    <Input id="height" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.height} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Width</Label>
-                    <Input
-                      placeholder="px"
-                      id="width"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.width}
-                    />
+                    <Input placeholder="px" id="width" onChange={handleOnChanges} value={state.editor.selectedElement.styles.width} />
                   </div>
                 </div>
               </div>
@@ -274,41 +217,21 @@ export default function SettingsTab() {
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Top</Label>
-                    <Input
-                      id="marginTop"
-                      placeholder="px"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginTop}
-                    />
+                    <Input id="marginTop" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.marginTop} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Bottom</Label>
-                    <Input
-                      id="marginBottom"
-                      placeholder="px"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginBottom}
-                    />
+                    <Input id="marginBottom" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.marginBottom} />
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Left</Label>
-                    <Input
-                      id="marginLeft"
-                      placeholder="px"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginLeft}
-                    />
+                    <Input id="marginLeft" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.marginLeft} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Right</Label>
-                    <Input
-                      id="marginRight"
-                      placeholder="px"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginRight}
-                    />
+                    <Input id="marginRight" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.marginRight} />
                   </div>
                 </div>
               </div>
@@ -319,41 +242,21 @@ export default function SettingsTab() {
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Top</Label>
-                    <Input
-                      placeholder="px"
-                      id="paddingTop"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingTop}
-                    />
+                    <Input placeholder="px" id="paddingTop" onChange={handleOnChanges} value={state.editor.selectedElement.styles.paddingTop} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Bottom</Label>
-                    <Input
-                      placeholder="px"
-                      id="paddingBottom"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingBottom}
-                    />
+                    <Input placeholder="px" id="paddingBottom" onChange={handleOnChanges} value={state.editor.selectedElement.styles.paddingBottom} />
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Left</Label>
-                    <Input
-                      placeholder="px"
-                      id="paddingLeft"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingLeft}
-                    />
+                    <Input placeholder="px" id="paddingLeft" onChange={handleOnChanges} value={state.editor.selectedElement.styles.paddingLeft} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Left</Label>
-                    <Input
-                      placeholder="px"
-                      id="paddingRight"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingRight}
-                    />
+                    <Input placeholder="px" id="paddingRight" onChange={handleOnChanges} value={state.editor.selectedElement.styles.paddingRight} />
                   </div>
                 </div>
               </div>
@@ -362,9 +265,7 @@ export default function SettingsTab() {
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Decorations" className="px-6 py-0">
-        <AccordionTrigger className="!no-underline">
-          Decorations
-        </AccordionTrigger>
+        <AccordionTrigger className="!no-underline">Decorations</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4">
           <div>
             <Label className="text-muted-foreground">Opacity</Label>
@@ -407,15 +308,11 @@ export default function SettingsTab() {
           <div className="flex flex-col gap-2">
             <Label className="text-muted-foreground">Background Color</Label>
             <div className="flex border-[1px] rounded-md overflow-clip">
-              <ColorPicker
-                color={state.editor.selectedElement.styles.backgroundColor}
-                onChange={onChangeColorBg}
-              >
+              <ColorPicker color={state.editor.selectedElement.styles.backgroundColor} onChange={onChangeColorBg}>
                 <div
                   className="w-12 cursor-pointer"
                   style={{
-                    backgroundColor:
-                      state.editor.selectedElement.styles.backgroundColor,
+                    backgroundColor: state.editor.selectedElement.styles.backgroundColor,
                   }}
                 />
               </ColorPicker>
@@ -434,8 +331,7 @@ export default function SettingsTab() {
               <div
                 className="w-12"
                 style={{
-                  backgroundImage:
-                    state.editor.selectedElement.styles.backgroundImage,
+                  backgroundImage: state.editor.selectedElement.styles.backgroundImage,
                 }}
               />
               <Input
@@ -461,22 +357,13 @@ export default function SettingsTab() {
               value={state.editor.selectedElement.styles.backgroundSize?.toString()}
             >
               <TabsList className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
-                <TabsTrigger
-                  value="cover"
-                  className="size-10 p-0 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="cover" className="size-10 p-0 data-[state=active]:bg-muted">
                   <ChevronsLeftRightIcon size={18} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="contain"
-                  className="size-10 p-0 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="contain" className="size-10 p-0 data-[state=active]:bg-muted">
                   <AlignVerticalJustifyCenter size={18} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="auto"
-                  className="size-10 p-0 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="auto" className="size-10 p-0 data-[state=active]:bg-muted">
                   <LucideImage size={18} />
                 </TabsTrigger>
               </TabsList>
@@ -500,28 +387,16 @@ export default function SettingsTab() {
             value={state.editor.selectedElement.styles.justifyContent}
           >
             <TabsList className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
-              <TabsTrigger
-                value="space-between"
-                className="size-10 data-[state=active]:bg-muted"
-              >
+              <TabsTrigger value="space-between" className="size-10 data-[state=active]:bg-muted">
                 <AlignHorizontalSpaceBetween size={18} />
               </TabsTrigger>
-              <TabsTrigger
-                value="space-evenly"
-                className="size-10 data-[state=active]:bg-muted"
-              >
+              <TabsTrigger value="space-evenly" className="size-10 data-[state=active]:bg-muted">
                 <AlignHorizontalSpaceAround size={18} />
               </TabsTrigger>
-              <TabsTrigger
-                value="center"
-                className="size-10 data-[state=active]:bg-muted"
-              >
+              <TabsTrigger value="center" className="size-10 data-[state=active]:bg-muted">
                 <AlignHorizontalJustifyCenterIcon size={18} />
               </TabsTrigger>
-              <TabsTrigger
-                value="start"
-                className="size-10 data-[state=active]:bg-muted"
-              >
+              <TabsTrigger value="start" className="size-10 data-[state=active]:bg-muted">
                 <AlignHorizontalJustifyStart size={18} />
               </TabsTrigger>
             </TabsList>
@@ -539,16 +414,10 @@ export default function SettingsTab() {
             value={state.editor.selectedElement.styles.alignItems}
           >
             <TabsList className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
-              <TabsTrigger
-                value="center"
-                className="size-10 data-[state=active]:bg-muted"
-              >
+              <TabsTrigger value="center" className="size-10 data-[state=active]:bg-muted">
                 <AlignVerticalJustifyCenter size={18} />
               </TabsTrigger>
-              <TabsTrigger
-                value="normal"
-                className="size-10 data-[state=active]:bg-muted"
-              >
+              <TabsTrigger value="normal" className="size-10 data-[state=active]:bg-muted">
                 <AlignVerticalJustifyStart size={18} />
               </TabsTrigger>
             </TabsList>
@@ -584,28 +453,16 @@ export default function SettingsTab() {
               value={state.editor.selectedElement.styles.flexDirection}
             >
               <TabsList className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
-                <TabsTrigger
-                  value="row"
-                  className="size-10 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="row" className="size-10 data-[state=active]:bg-muted">
                   <Rows size={18} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="row-reverse"
-                  className="size-10 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="row-reverse" className="size-10 data-[state=active]:bg-muted">
                   <Rows size={18} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="column"
-                  className="size-10 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="column" className="size-10 data-[state=active]:bg-muted">
                   <Columns size={18} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="column-reverse"
-                  className="size-10 data-[state=active]:bg-muted"
-                >
+                <TabsTrigger value="column-reverse" className="size-10 data-[state=active]:bg-muted">
                   <Columns size={18} />
                 </TabsTrigger>
               </TabsList>

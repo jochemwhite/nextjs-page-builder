@@ -7,8 +7,8 @@ import { EyeOff } from "lucide-react";
 import { useEffect } from "react";
 import Recursive from "./page-editor-components/recursive";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import Container from "./page-editor-components/container";
 import { EditorElement, PageDetails } from "@/types/pageEditor";
+import MainContainer from "../components/layout/mainContainer";
 
 type Props = {
   liveMode?: boolean;
@@ -103,7 +103,7 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
       )}
       {Array.isArray(state.editor.elements) && (
         <div className="w-full h-full absolute">
-          <Container
+          <MainContainer
             element={{
               ...state.editor.elements[0],
               content: [],

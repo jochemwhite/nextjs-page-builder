@@ -1,112 +1,37 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { EditorBtns } from "@/lib/constants";
-import { ReactNode } from "react";
-import TextPlaceHolder from "./text-placeholder";
-import ContainerPlaceHolder from "./container-placeholder";
-import VideoPlaceholder from "./video-placeholder";
-import TwoColumnsPlaceHolder from "./two-columns-placeholder";
-import LinkPLaceholder from "./link-placeholder";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";import { elements } from "../../../components/index";
 
-import ImageComponentPlaceHolder from "./image-components-placeholder";
-import QuoteComponentPlaceHolder from "./quote-component-placeholder";
+import PlaceHolder from "@/components/pageEditor/components/placeholder";
 
 type Props = {};
 
 export default function ComponentsTab({}: Props) {
-  const elements: {
-    Component: ReactNode;
-    label: string;
-    id: EditorBtns;
-    group: "layout" | "elements";
-  }[] = [
-    {
-      Component: <TextPlaceHolder />,
-      group: "elements",
-      label: "Text",
-      id: "text",
-    },
-    {
-      Component: <ContainerPlaceHolder />,
-      label: "Container",
-      id: "container",
-      group: "layout",
-    },
-    {
-      label: "2 Columns",
-      id: "2Col",
-      group: "layout",
-      Component: <TwoColumnsPlaceHolder />,
-    },
-    {
-      Component: <VideoPlaceholder />,
-      label: "Video",
-      id: "video",
-      group: "elements",
-    },
-    {
-      Component: <LinkPLaceholder />,
-      label: "Link",
-      group: "elements",
-      id: "link",
-    },
+  const elementsByGroup = elements.reduce((acc: { [key: string]: any[] }, element) => {
+    const { group } = element;
 
+    if (!acc[group]) {
+      acc[group] = [];
+    }
 
-    {
-      Component: <ImageComponentPlaceHolder />,
-      label: "Image",
-      id: "image",
-      group: "elements",
-    },
-    {
-      Component: <QuoteComponentPlaceHolder />,
-      label: "Quote",
-      group: "elements",
-      id: "quote",
-    },
-  ];
+    acc[group].push(element);
+    return acc;
+  }, {});
+
+  // Step 2: Dynamically create an AccordionItem for each group
   return (
-    <Accordion
-      type="multiple"
-      className="w-full"
-      defaultValue={["Layout", "Elements"]}
-    >
-      <AccordionItem value="Layout" className="px-6 py-0 border-y-[1px]">
-        <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
-        <AccordionContent className="grid grid-cols-2 gap-2">
-          {elements
-            .filter((e) => e.group == "layout")
-            .map((element) => (
-              <div
-                key={element.id}
-                className="flex flex-col items-center justify-center"
-              >
-                {element.Component}
+    <Accordion type="multiple"  className="w-full" defaultValue={Object.keys(elementsByGroup)}>
+      {Object.entries(elementsByGroup).map(([groupName, elements]) => (
+        <AccordionItem key={groupName} value={groupName} className="px-6 py-0 border-y-[1px]">
+          <AccordionTrigger className="!no-underline capitalize">{groupName}</AccordionTrigger>
+          <AccordionContent className="grid grid-cols-2 gap-2">
+            {elements.map((element) => (
+              <div key={element.id} className="flex flex-col items-center justify-center">
+                <PlaceHolder Type={element.id} Icon={element.icon} />
                 <span className="text-muted-foreground">{element.label}</span>
               </div>
             ))}
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="Elements" className="px-6 py-0 border-y-[1px]">
-        <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
-        <AccordionContent className="grid grid-cols-2 gap-2">
-          {elements
-            .filter((e) => e.group == "elements")
-            .map((element) => (
-              <div
-                key={element.id}
-                className="flex flex-col items-center justify-center"
-              >
-                {element.Component}
-                <span className="text-muted-foreground">{element.label}</span>
-              </div>
-            ))}
-        </AccordionContent>
-      </AccordionItem>
+          </AccordionContent>
+        </AccordionItem>
+      ))}
     </Accordion>
   );
 }

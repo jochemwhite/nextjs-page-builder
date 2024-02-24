@@ -21,7 +21,6 @@ type Props = {
   element: EditorElement;
   handleOnChanges: (e: PropertisElementHandler) => void;
   handleChangeCustomValues: (e: PropertisElementHandler) => void;
-  subAccountId: string;
 };
 
 export default function ImageProperties({

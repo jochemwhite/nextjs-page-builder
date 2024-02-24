@@ -2,6 +2,8 @@ import { EditorBtns } from "@/lib/constants";
 import React from "react";
 
 export default function ContainerPlaceHolder() {
+
+  
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);
