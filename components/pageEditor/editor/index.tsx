@@ -28,6 +28,7 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
       });
     }
   }, [liveMode]);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!pageDetails) return;
@@ -84,12 +85,10 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
     });
   };
 
-
-
   return (
     <div
       onClick={handleClick}
-      className={cn("use-automation-zoom-in h-full  mr-[385px] bg-background transition-all rounded-md relative", {
+      className={cn("use-automation-zoom-in h-full overflow-scroll mr-[385px] bg-background transition-all rounded-md relative pb-60", {
         "!p-0 !mr-0": state.editor.previewMode === true,
         "!w-[850px]": state.editor.device === "Tablet",
         "!w-[450px]": state.editor.device === "Mobile",
@@ -102,7 +101,7 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
         </Button>
       )}
       {Array.isArray(state.editor.elements) && (
-        <div className="w-full h-full absolute">
+        <div className="w-full h-full absolute pb-12">
           <MainContainer
             element={{
               ...state.editor.elements[0],
@@ -119,7 +118,13 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
                 (state.editor.elements[0].content as Array<EditorElement>).map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={state.editor.liveMode}>
                     {(provided, snapshot) => (
-                      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} suppressContentEditableWarning={true}>
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        suppressContentEditableWarning={true}
+                        
+                      >
                         <Recursive element={item} />
                       </div>
                     )}

@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 import { EditorElement } from "@/types/pageEditor";
 import { Trash } from "lucide-react";
 import React from "react";
+import { TextContent } from ".";
 
 type Props = {
-  element: EditorElement;
+  element: EditorElement<TextContent>
 };
 
 export default function TextComponent({ element }: Props) {

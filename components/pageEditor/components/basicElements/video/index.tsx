@@ -11,7 +11,7 @@ const VideoElement: ElementSidebar = {
   name: "Video",
   defaultPayload: {
     content: {
-      src: "https://www.youtube.com/embed/dQw4w9WgXcQ?si=y_Sm2klboPmi5UnT&autoplay=1",
+      src: "https://www.youtube.com/embed/dQw4w9WgXcQ?si=y_Sm2klboPmi5UnT",
     },
     id: v4(),
     name: "Video",

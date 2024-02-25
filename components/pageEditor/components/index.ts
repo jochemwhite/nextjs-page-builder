@@ -1,11 +1,13 @@
 import * as basicElements from './basicElements';
 import * as Layout from './layout';
+import * as Hero from './Hero';
 
 
 
 const allElements = {
   ...basicElements,
-  ...Layout
+  ...Layout,
+  ...Hero
 };
 
 

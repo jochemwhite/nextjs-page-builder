@@ -3,6 +3,7 @@ import { LucideIcon } from "lucide-react";
 import { CSSProperties, ReactNode } from "react";
 
 export interface PageDetails {
+  $id: string;
   name: string;
   pathName: string;
   createdAt: Date;
@@ -15,20 +16,13 @@ export interface PageDetails {
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
-export type EditorElement = {
+export type EditorElement <T = any> = {
   id: string;
   styles: CSSProperties;
   name: string;
   type: EditorBtns;
-  content:
-    | EditorElement[]
-    | {
-        href?: string;
-        innerText?: string;
-        src?: string;
-        typeText?: TypeTextP;
-        quoteStyles?: QuoteProps;
-      };
+  content: T
+    
 };
 export type QuoteProps = {
   styles?: CSSProperties;
@@ -72,15 +66,15 @@ export type PropertisElementHandler = {
   };
 };
 
-export type ElementSidebar = {
+export type ElementSidebar<T> = {
   icon: LucideIcon;
   label: string;
   id: string;
   name: string;
   type: EditorBtns;
-  group: "layout" | "elements";
-  defaultPayload: EditorElement;
-  component?: ({ element }: {element: EditorElement}) => JSX.Element;
+  group: "layout" | "elements" | "hero" | "twitch" | "youtube" | "discord" 
+  defaultPayload: EditorElement<T>;
+  component?: ({ element }: {element: EditorElement<T>}) => JSX.Element;
 };
 
 export interface Element {

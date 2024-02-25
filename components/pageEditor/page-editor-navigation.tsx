@@ -10,14 +10,14 @@ import { toast } from "@/components/ui/use-toast";
 import usePageEditor from "@/hooks/usePageEditor";
 import { cn } from "@/lib/utils";
 import { PageDetailStorage } from "@/types/database/pages";
-import { DeviceTypes } from "@/types/pageEditor";
+import { DeviceTypes, PageDetails } from "@/types/pageEditor";
 import { ArrowLeftCircle, EyeIcon, Laptop, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FocusEventHandler, useEffect } from "react";
 
 type Props = {
-  PageDetails: PageDetailStorage;
+  PageDetails: PageDetails
 };
 
 export default function PageEditorNavigation({ PageDetails }: Props) {
@@ -69,7 +69,9 @@ export default function PageEditorNavigation({ PageDetails }: Props) {
 
       if (PageDetails.$id) {
         try {
+          // console.log(PageDetails)
           await updatePage(newPage, PageDetails.$id);
+
         } catch (error) {
           console.log(error);
         }

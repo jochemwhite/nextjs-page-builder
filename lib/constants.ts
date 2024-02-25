@@ -223,7 +223,8 @@ export type EditorBtns =
   | "image"
   | null
   | "3Col"
-  | "quote";
+  | "quote"
+  |"Video Hero"
 
 export const defaultStyles: React.CSSProperties = {
   backgroundPosition: "center",

@@ -1,9 +1,14 @@
-import { ElementSidebar } from "@/types/pageEditor";
+import { ElementSidebar, TypeTextP } from "@/types/pageEditor";
 import { TypeIcon } from "lucide-react";
 import { v4 } from "uuid";
 import TextComponent from "./text";
 
-const text: ElementSidebar = {
+export interface TextContent {
+  innerText: string;
+  typeText?: TypeTextP;
+}
+
+const text: ElementSidebar<TextContent> = {
   icon: TypeIcon,
   group: "elements",
   id: v4(),
@@ -19,7 +24,7 @@ const text: ElementSidebar = {
     styles: {},
     type: "text",
   },
-  component: TextComponent
+  component: TextComponent,
 };
 
 export default text;

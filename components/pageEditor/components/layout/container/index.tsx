@@ -10,7 +10,7 @@ const container: ElementSidebar = {
   icon: Container,
   group: "layout",
   id: "container",
-  label: "Test",
+  label: "Container",
   name: "Container",
   type: "container",
   defaultPayload: {

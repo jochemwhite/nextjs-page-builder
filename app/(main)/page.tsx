@@ -22,7 +22,7 @@ export default function Page() {
         previewImage: null,
         updatedAt: new Date(),
         visits: 0,
-      });
+      } as any);
 
       if (!response) {
         setLoading(false);
