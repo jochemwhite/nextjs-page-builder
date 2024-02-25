@@ -67,7 +67,7 @@ const ElementRec = ({
       >
         <div className="w-full flex space-x-2 ">
           <BoxSelect size={20} />
-          <p> {element.name}</p>
+          <p> {element.type}</p>
         </div>
       </AccordionTrigger>
       <AccordionContent>
@@ -84,7 +84,7 @@ const ElementRec = ({
           ))}
         {!Array.isArray(element.content) && (
           <div className="flex items-center space-x-2 ml-2">
-            <p>{element.name}</p>
+            <p>{element.type}</p>
           </div>
         )}
       </AccordionContent>

@@ -1,13 +1,15 @@
 import * as basicElements from './basicElements';
 import * as Layout from './layout';
 import * as Hero from './Hero';
+import * as Discord from './discord';
 
 
 
 const allElements = {
   ...basicElements,
   ...Layout,
-  ...Hero
+  ...Hero,
+  ...Discord
 };
 
 

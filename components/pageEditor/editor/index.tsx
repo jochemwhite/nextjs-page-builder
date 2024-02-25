@@ -4,7 +4,7 @@ import { useEditor } from "@/providers/editor/editor-provider";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EyeOff } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Recursive from "./page-editor-components/recursive";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { EditorElement, PageDetails } from "@/types/pageEditor";
@@ -17,6 +17,15 @@ type Props = {
 
 export default function PageEditor({ pageDetails, liveMode }: Props) {
   const { state, dispatch } = useEditor();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerHeight, setContainerHeight] = useState(0);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      console.log(containerRef.current.scrollHeight);
+      setContainerHeight(containerRef.current.scrollHeight);
+    }
+  }, [state.editor.elements]);
 
   useEffect(() => {
     if (liveMode) {
@@ -88,7 +97,7 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
   return (
     <div
       onClick={handleClick}
-      className={cn("use-automation-zoom-in h-full overflow-scroll mr-[385px] bg-background transition-all rounded-md relative pb-60", {
+      className={cn("use-automation-zoom-in h-full overflow-y-auto mr-[385px] bg-background transition-all rounded-md relative ", {
         "!p-0 !mr-0": state.editor.previewMode === true,
         "!w-[850px]": state.editor.device === "Tablet",
         "!w-[450px]": state.editor.device === "Mobile",
@@ -101,7 +110,12 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
         </Button>
       )}
       {Array.isArray(state.editor.elements) && (
-        <div className="w-full h-full absolute pb-12">
+        <div
+          className="w-full absolute "
+          style={{
+            height: containerHeight + 100,
+          }}
+        >
           <MainContainer
             element={{
               ...state.editor.elements[0],
@@ -110,31 +124,38 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
           />
         </div>
       )}
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable" isDropDisabled={state.editor.liveMode} isCombineEnabled={state.editor.liveMode}>
-          {(provided, snapshot) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
-              {Array.isArray(state.editor.elements) &&
-                (state.editor.elements[0].content as Array<EditorElement>).map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={state.editor.liveMode}>
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        suppressContentEditableWarning={true}
-                        
-                      >
-                        <Recursive element={item} />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-              {/* {provided.placeholder} */}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <div ref={containerRef}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable" isDropDisabled={state.editor.liveMode} isCombineEnabled={state.editor.liveMode}>
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className={cn("h-full", {
+                  "p-8 ": !state.editor.liveMode,
+                })}
+              >
+                {Array.isArray(state.editor.elements) &&
+                  (state.editor.elements[0].content as Array<EditorElement>).map((item, index) => (
+                    <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={state.editor.liveMode}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          suppressContentEditableWarning={true}
+                        >
+                          <Recursive element={item} />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
     </div>
   );
 }

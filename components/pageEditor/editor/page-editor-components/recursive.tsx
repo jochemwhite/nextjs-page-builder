@@ -10,7 +10,7 @@ export default function Recursive({ element }: Props) {
     const Component = elements.find((el) => el.type === element.type)?.component;
 
     if (!Component) {
-        // toast.error("Element not found");
+        console.log("Component not found");
         return 
     }
 

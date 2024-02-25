@@ -11,6 +11,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   AlignCenter,
   AlignHorizontalJustifyCenterIcon,
+  AlignHorizontalJustifyEnd,
   AlignHorizontalJustifyStart,
   AlignHorizontalSpaceAround,
   AlignHorizontalSpaceBetween,
@@ -398,6 +399,9 @@ export default function SettingsTab() {
               </TabsTrigger>
               <TabsTrigger value="start" className="size-10 data-[state=active]:bg-muted">
                 <AlignHorizontalJustifyStart size={18} />
+              </TabsTrigger>
+              <TabsTrigger value="end" className="size-10 data-[state=active]:bg-muted">
+                <AlignHorizontalJustifyEnd size={18} />
               </TabsTrigger>
             </TabsList>
           </Tabs>

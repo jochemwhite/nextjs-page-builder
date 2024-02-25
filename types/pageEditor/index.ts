@@ -1,4 +1,4 @@
-import { EditorBtns } from "@/lib/constants";
+// import { EditorBtns } from "@/lib/constants";
 import { LucideIcon } from "lucide-react";
 import { CSSProperties, ReactNode } from "react";
 
@@ -20,7 +20,7 @@ export type EditorElement <T = any> = {
   id: string;
   styles: CSSProperties;
   name: string;
-  type: EditorBtns;
+  type: string;
   content: T
     
 };
@@ -71,7 +71,7 @@ export type ElementSidebar<T> = {
   label: string;
   id: string;
   name: string;
-  type: EditorBtns;
+  type: string;
   group: "layout" | "elements" | "hero" | "twitch" | "youtube" | "discord" 
   defaultPayload: EditorElement<T>;
   component?: ({ element }: {element: EditorElement<T>}) => JSX.Element;
@@ -82,6 +82,6 @@ export interface Element {
 }
 
 export interface Placeholder {
-  Type: EditorBtns;
+  Type: string;
   Icon: LucideIcon;
 }
