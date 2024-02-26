@@ -1,7 +1,5 @@
 "use client";
-import {
-  useEditor,
-} from "@/providers/editor/editor-provider";
+import { useEditor } from "@/providers/editor/editor-provider";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { EditorElement } from "@/types/pageEditor";
@@ -10,21 +8,11 @@ import React from "react";
 import { TextContent } from ".";
 
 type Props = {
-  element: EditorElement<TextContent>
+  element: EditorElement<TextContent>;
 };
 
 export default function TextComponent({ element }: Props) {
   const { dispatch, state } = useEditor();
-
-  
-  const handleDeleteElement = () => {
-    dispatch({
-      type: "DELETE_ELEMENT",
-      payload: {
-        elementDetails: element,
-      },
-    });
-  };
 
   const sytles = element.styles;
 
@@ -40,24 +28,7 @@ export default function TextComponent({ element }: Props) {
   ///WE ARE NOT ADDING DRAG DROP
   const content = !Array.isArray(element.content) ? element.content : null;
   return (
-    <div
-      style={sytles}
-      onClick={handleOnClikBody}
-      className={cn(
-        "p-[2px] w-full m-[5px] relative text-[16px] transition-all",
-        {
-          "!border-blue-500": state.editor.selectedElement.id === element.id,
-          "!border-solid": state.editor.selectedElement.id === element.id,
-          "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
-        }
-      )}
-    >
-      {state.editor.selectedElement.id === element.id &&
-        !state.editor.liveMode && (
-          <Badge className="absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg">
-            {state.editor.selectedElement.name}
-          </Badge>
-        )}
+    <div>
       {(content?.typeText === "Parrafo" || content?.typeText == null) && (
         <span
           contentEditable={!state.editor.liveMode}
@@ -121,17 +92,6 @@ export default function TextComponent({ element }: Props) {
           {content?.innerText}
         </h2>
       )}
-
-      {state.editor.selectedElement.id === element.id &&
-        !state.editor.liveMode && (
-          <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
-            <Trash
-              className="cursor-pointer"
-              size={16}
-              onClick={handleDeleteElement}
-            />
-          </div>
-        )}
     </div>
   );
 }

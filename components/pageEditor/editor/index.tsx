@@ -25,7 +25,7 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
       console.log(containerRef.current.scrollHeight);
       setContainerHeight(containerRef.current.scrollHeight);
     }
-  }, [state.editor.elements]);
+  }, [state.editor]);
 
   useEffect(() => {
     if (liveMode) {

@@ -19,7 +19,7 @@ const DiscordWidget: ElementSidebar<DiscordWidgetContent> = {
       innerText: "Text",
     },
     id: v4(),
-    name: "Text",
+    name: "Discord Widget",
     styles: {},
     type: "discord-widget",
   },

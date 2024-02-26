@@ -86,17 +86,13 @@ export default function MainContainer({ element }: Props) {
 
   return (
     <div
-      style={styles}
-      className={cn("relative p-4 transition-all group", {
+     
+      className={cn("relative  transition-all group", {
         "max-w-full w-full": type === "container" || type === "2Col",
-        "h-fit": type === "container",
-        "h-full": type === "__body",
+        "h-full": type === "container" ||  type === "__body",
         "overflow-auto": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
-        "!border-blue-500": selectItemAndNotLiveMode && state.editor.selectedElement.type !== "__body",
-        "!border-yellow-400 !border-4": selectItemAndNotLiveMode && state.editor.selectedElement.type === "__body",
-        "!border-solid": selectItemAndNotLiveMode,
-        "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
+        "p-4": !state.editor.liveMode
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
@@ -104,19 +100,7 @@ export default function MainContainer({ element }: Props) {
       onDragStart={(e) => handleDragStart(e, "container")}
       onClick={handleOnCLickBody}
     >
-      <Badge
-        className={cn("absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg hidden", {
-          block: selectItemAndNotLiveMode,
-        })}
-      >
-        {name}
-      </Badge>
       {Array.isArray(content) && content.map((childElement) => <Recursive element={childElement} key={childElement.id} />)}
-      {selectItemAndNotLiveMode && state.editor.selectedElement.type !== "__body" && (
-        <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg">
-          <Trash size={16} onClick={handleDeleteElement} />
-        </div>
-      )}
     </div>
   );
 }

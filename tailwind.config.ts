@@ -83,16 +83,12 @@ const config = {
         boxShadow: {
           // light
           "tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-          "tremor-card":
-            "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-          "tremor-dropdown":
-            "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+          "tremor-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+          "tremor-dropdown": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
           // dark
           "dark-tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-          "dark-tremor-card":
-            "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-          "dark-tremor-dropdown":
-            "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+          "dark-tremor-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+          "dark-tremor-dropdown": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
         },
         borderRadius: {
           "tremor-small": "0.375rem",
@@ -151,11 +147,49 @@ const config = {
           "0%": { transform: "translateY(-30px) scale(0.2)" },
           "100%": { transform: "transform: translateY(0px) scale(1)" },
         },
+        "bottom-arrow": {
+          "0%": {
+            transform: "translate(0, 0)",
+            opacity: "0",
+          },
+          "50%": {
+            opacity: "1",
+          },
+          "100%": {
+            transform: "translate(0px, 20px)",
+            opacity: "0",
+          },
+        },
+        lineFromTopToBottom: {
+          "0%": {
+            transform: "scaleY(0)",
+            "transform-origin": "top",
+          },
+          "100%": {
+            transform: "scaleY(1)",
+            'transform-origin': 'top'
+          },
+        },
+        lineFrombottomToBottomEnd: {
+          "0%": {
+            transform: "scaleY(1)",
+            "transform-origin": "top",
+            display: "block",
+          },
+          "100%": {
+            transform: "scaleY(0)",
+            'transform-origin': 'top',
+            "display": "none",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "automation-zoom-in": "automation-zoom-in 0.5s",
+        "bottom-arrow": "bottom-arrow 1.5s infinite",
+        lineFromTopToBottom: "lineFromTopToBottom .3s ease-in ",
+        lineFrombottomToBottomEnd: "lineFrombottomToBottomEnd .3s ease-in  ",
       },
     },
   },

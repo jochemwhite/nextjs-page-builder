@@ -1,4 +1,8 @@
 import text from "./text";
 import VideoElement from "./video";
+import ButtonElement from "./button";
 
-export { text, VideoElement };
+export { text, VideoElement, ButtonElement };
+
+
+
