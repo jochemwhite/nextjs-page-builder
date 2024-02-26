@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EyeOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import Recursive from "./page-editor-components/recursive";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { EditorElement, PageDetails } from "@/types/pageEditor";
 import MainContainer from "../components/layout/mainContainer";
+import Recursive from "./recursive";
 
 type Props = {
   liveMode?: boolean;

@@ -1,13 +1,15 @@
 "use client";
 
 import { ColorPicker } from "@/components/global/color-picker";
-import { useEditor } from "@/providers/editor/editor-provider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import React, { useState, useEffect } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEditor } from "@/providers/editor/editor-provider";
+import { PropertisElementHandler } from "@/types/pageEditor";
 import {
   AlignCenter,
   AlignHorizontalJustifyCenterIcon,
@@ -25,13 +27,15 @@ import {
   LucideImage,
   Rows,
 } from "lucide-react";
-import { ChangeEvent, ChangeEventHandler, useRef } from "react";
-import TextPropertys from "./_text-propertys";
-import ImageProperties from "./image-propertys";
-import { PropertisElementHandler } from "@/types/pageEditor";
 
 export default function SettingsTab() {
   const { dispatch, state } = useEditor();
+  const [styles, setStyles] = useState<React.CSSProperties>(state.editor.selectedElement.styles);
+
+  useEffect(() => {
+    setStyles(state.editor.selectedElement.styles);
+  }, [state.editor.selectedElement.id]);
+
   const handleChangeCustomValues = (e: PropertisElementHandler) => {
     const settingProperty = e.target.id;
     const value = e.target.value;
@@ -111,13 +115,7 @@ export default function SettingsTab() {
               />
             </div>
           )}
-          {state.editor.selectedElement.type === "image" && (
-            <ImageProperties
-              handleOnChanges={handleOnChanges}
-              handleChangeCustomValues={handleChangeCustomValues}
-              element={state.editor.selectedElement}
-            />
-          )}
+
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Typography" className="px-6 py-0 border-y-[1px]">
@@ -134,7 +132,7 @@ export default function SettingsTab() {
                   },
                 });
               }}
-              value={state.editor.selectedElement.styles.textAlign}
+              value={styles.textAlign}
             >
               <TabsList className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
                 <TabsTrigger value="left" className="size-10 p-0 data-[state=active]:bg-muted">
@@ -154,7 +152,7 @@ export default function SettingsTab() {
           </div>
           <div className="flex flex-col gap-2">
             <p className="text-muted-foreground">Font Family</p>
-            <Input id="DM Sans" onChange={handleOnChanges} value={state.editor.selectedElement.styles.fontFamily} />
+            <Input id="DM Sans" onChange={handleOnChanges} value={styles.fontFamily} />
           </div>
           <div className="flex gap-4">
             <div>
@@ -184,16 +182,10 @@ export default function SettingsTab() {
             </div>
             <div>
               <Label className="text-muted-foreground">Size</Label>
-              <Input placeholder="px" id="fontSize" onChange={handleOnChanges} value={state.editor.selectedElement.styles.fontSize} />
+              <Input placeholder="px" id="fontSize" onChange={handleOnChanges} value={styles.fontSize} />
             </div>
           </div>
-          {state.editor.selectedElement.type == "text" && (
-            <TextPropertys
-              handleChangeCustomValues={handleChangeCustomValues}
-              element={state.editor.selectedElement}
-              handleOnChanges={handleOnChanges}
-            />
-          )}
+
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Dimensions" className="px-6 py-0">
@@ -205,11 +197,11 @@ export default function SettingsTab() {
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Height</Label>
-                    <Input id="height" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.height} />
+                    <Input id="height" placeholder="px" onChange={handleOnChanges} value={styles.height} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Width</Label>
-                    <Input placeholder="px" id="width" onChange={handleOnChanges} value={state.editor.selectedElement.styles.width} />
+                    <Input placeholder="px" id="width" onChange={handleOnChanges} value={styles.width} />
                   </div>
                 </div>
               </div>
@@ -218,21 +210,21 @@ export default function SettingsTab() {
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Top</Label>
-                    <Input id="marginTop" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.marginTop} />
+                    <Input id="marginTop" placeholder="px" onChange={handleOnChanges} value={styles.marginTop} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Bottom</Label>
-                    <Input id="marginBottom" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.marginBottom} />
+                    <Input id="marginBottom" placeholder="px" onChange={handleOnChanges} value={styles.marginBottom} />
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Left</Label>
-                    <Input id="marginLeft" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.marginLeft} />
+                    <Input id="marginLeft" placeholder="px" onChange={handleOnChanges} value={styles.marginLeft} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Right</Label>
-                    <Input id="marginRight" placeholder="px" onChange={handleOnChanges} value={state.editor.selectedElement.styles.marginRight} />
+                    <Input id="marginRight" placeholder="px" onChange={handleOnChanges} value={styles.marginRight} />
                   </div>
                 </div>
               </div>
@@ -243,21 +235,21 @@ export default function SettingsTab() {
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Top</Label>
-                    <Input placeholder="px" id="paddingTop" onChange={handleOnChanges} value={state.editor.selectedElement.styles.paddingTop} />
+                    <Input placeholder="px" id="paddingTop" onChange={handleOnChanges} value={styles.paddingTop} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Bottom</Label>
-                    <Input placeholder="px" id="paddingBottom" onChange={handleOnChanges} value={state.editor.selectedElement.styles.paddingBottom} />
+                    <Input placeholder="px" id="paddingBottom" onChange={handleOnChanges} value={styles.paddingBottom} />
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Left</Label>
-                    <Input placeholder="px" id="paddingLeft" onChange={handleOnChanges} value={state.editor.selectedElement.styles.paddingLeft} />
+                    <Input placeholder="px" id="paddingLeft" onChange={handleOnChanges} value={styles.paddingLeft} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Left</Label>
-                    <Input placeholder="px" id="paddingRight" onChange={handleOnChanges} value={state.editor.selectedElement.styles.paddingRight} />
+                    <Input placeholder="px" id="paddingRight" onChange={handleOnChanges} value={styles.paddingRight} />
                   </div>
                 </div>
               </div>

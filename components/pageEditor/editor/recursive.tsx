@@ -1,9 +1,9 @@
 import { EditorElement } from "@/types/pageEditor";
-import { elements } from "../../components";
 import { Badge } from "@/components/ui/badge";
 import { useEditor } from "@/providers/editor/editor-provider";
 import { Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { elements } from "../components";
 
 type Props = {
   element: EditorElement;

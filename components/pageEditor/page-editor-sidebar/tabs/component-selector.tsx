@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";import { elements } from "../../../components/index";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";import { elements } from "../../components/index";
 
 import PlaceHolder from "@/components/pageEditor/components/placeholder";
 

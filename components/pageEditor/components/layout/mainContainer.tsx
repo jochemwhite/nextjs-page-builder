@@ -8,8 +8,8 @@ import { Trash } from "lucide-react";
 import React from "react";
 import { toast } from "@/components/ui/use-toast";
 import { elements } from "..";
-import Recursive from "@/components/pageEditor/editor/page-editor-components/recursive";
 import { v4 } from "uuid";
+import Recursive from "../../editor/recursive";
 type Props = {
   element: EditorElement;
 };

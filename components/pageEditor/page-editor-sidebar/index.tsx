@@ -8,7 +8,7 @@ import React from "react";
 import TabList from "./tabs";
 import SettingsTab from "./tabs/settings-tab";
 import MediaBucketTab from "./tabs/media-bucket-tab";
-import ComponentsTab from "./tabs/components-tabs";
+import ComponentSelector from "./tabs/component-selector";
 import LayersComponent from "./tabs/layers-component";
 
 type Props = {
@@ -57,7 +57,7 @@ export default function PageEditorSidebar() {
                 <SheetTitle>Components</SheetTitle>
                 <SheetDescription>You can drag adn drop components on the canvas</SheetDescription>
               </SheetHeader>
-              <ComponentsTab />
+              <ComponentSelector />
             </TabsContent>
             <TabsContent value="Layers">
               <SheetHeader className="text-left p-6">
