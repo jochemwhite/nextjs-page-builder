@@ -1,30 +1,18 @@
-import * as basicElements from './basicElements';
-import * as Layout from './layout';
-import * as Hero from './Hero';
-import * as Discord from './discord';
-
-
+import * as basicElements from "./basicElements";
+import * as Layout from "./layout";
+import * as Hero from "./Hero";
+import * as Discord from "./discord";
+import { EditorElement, EditorState, ElementSidebar } from "@/types/pageEditor";
 
 const allElements = {
   ...basicElements,
   ...Layout,
   ...Hero,
-  ...Discord
+  ...Discord,
 };
 
-
-const elements = Object.values(allElements).map((element) => {
-  return element
+const elements: ElementSidebar<any>[] = Object.values(allElements).map((element) => {
+  return element;
 });
 
-
-
-
-
-
-
 export { elements };
-
-
-
-

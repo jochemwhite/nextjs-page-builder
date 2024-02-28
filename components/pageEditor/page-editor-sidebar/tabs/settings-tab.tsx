@@ -27,14 +27,11 @@ import {
   LucideImage,
   Rows,
 } from "lucide-react";
+import { elements } from "../../components";
 
 export default function SettingsTab() {
   const { dispatch, state } = useEditor();
-  const [styles, setStyles] = useState<React.CSSProperties>(state.editor.selectedElement.styles);
-
-  useEffect(() => {
-    setStyles(state.editor.selectedElement.styles);
-  }, [state.editor.selectedElement.id]);
+  const styles = state.editor.selectedElement.styles;
 
   const handleChangeCustomValues = (e: PropertisElementHandler) => {
     const settingProperty = e.target.id;
@@ -75,6 +72,7 @@ export default function SettingsTab() {
       },
     });
   };
+
   const defaultValueOpacity = [
     typeof state.editor.selectedElement.styles?.opacity === "number"
       ? state.editor.selectedElement.styles?.opacity
@@ -101,23 +99,19 @@ export default function SettingsTab() {
       className="w-full"
       // defaultValue={["Typography", "Dimesions", "Decorations", "Flexbox"]}
     >
-      <AccordionItem value="Custom" className="px-6 py-0">
-        <AccordionTrigger className="!no-underline">Custom</AccordionTrigger>
-        <AccordionContent>
-          {state.editor.selectedElement.type === "link" && !Array.isArray(state.editor.selectedElement.content) && (
-            <div className="flex flex-col gap-2">
-              <p className="flex flex-col p-2">Link Path</p>
-              <Input
-                id="href"
-                placeholder="https:domain.example.com/pathname"
-                onChange={handleChangeCustomValues}
-                value={state.editor.selectedElement.content?.href}
-              />
-            </div>
-          )}
+      {elements
+        .filter((element) => element.type === state.editor.selectedElement.type)
+        .map((element) => (
+          <>
+            {element.settings && (
+              <AccordionItem key={element.id} value={element.label} className="px-6 py-0 border-y-[1px]">
+                <AccordionTrigger className="!no-underline">{element.label} Settings</AccordionTrigger>
+                <AccordionContent>{element.settings && <element.settings element={state.editor.selectedElement} />}</AccordionContent>
+              </AccordionItem>
+            )}
+          </>
+        ))}
 
-        </AccordionContent>
-      </AccordionItem>
       <AccordionItem value="Typography" className="px-6 py-0 border-y-[1px]">
         <AccordionTrigger className="!no-underline">Typography</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-2">
@@ -185,7 +179,6 @@ export default function SettingsTab() {
               <Input placeholder="px" id="fontSize" onChange={handleOnChanges} value={styles.fontSize} />
             </div>
           </div>
-
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Dimensions" className="px-6 py-0">
@@ -210,7 +203,7 @@ export default function SettingsTab() {
                 <div className="flex gap-4">
                   <div>
                     <Label className="text-muted-foreground">Top</Label>
-                    <Input id="marginTop" placeholder="px" onChange={handleOnChanges} value={styles.marginTop} />
+                    <Input id="marginTop" placeholder="px" onChange={handleOnChanges} value={styles.marginTop || ""} />
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Bottom</Label>
@@ -224,7 +217,7 @@ export default function SettingsTab() {
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Right</Label>
-                    <Input id="marginRight" placeholder="px" onChange={handleOnChanges} value={styles.marginRight} />
+                    <Input id="marginRight" placeholder="px" onChange={handleOnChanges} value={styles.marginRight || ""} />
                   </div>
                 </div>
               </div>

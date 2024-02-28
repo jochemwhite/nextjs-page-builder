@@ -1,7 +1,8 @@
 "use client";
 import { Editor, EditorElement, EditorProps, EditorState, HistoryState, PageDetails } from "@/types/pageEditor";
-import { Dispatch, createContext, useContext, useReducer } from "react";
+import { Dispatch, createContext, use, useContext, useEffect, useReducer } from "react";
 import { EditorAction } from "./editor-actions";
+import { it } from "node:test";
 
 const initialEditorState: EditorState["editor"] = {
   elements: [
@@ -59,10 +60,31 @@ const updateAnElement = (editorArray: EditorElement[], action: EditorAction): Ed
   if (action.type !== "UPDATE_ELEMENT") {
     throw Error("You sent the wron action type to the update Element State");
   }
+
   return editorArray.map((item) => {
     if (item.id === action.payload.elementDetails.id) {
+      if (item.id === "__body") {
+        const newobj = {
+          ...item,
+          styles: {
+            ...item.styles,
+            ...action.payload.elementDetails.styles,
+          },
+        };
+
+
+        return newobj;
+      }
+
+      const updatedElement = {
+        ...item,
+        ...action.payload.elementDetails,
+      };
+
+
       return { ...item, ...action.payload.elementDetails };
     } else if (item.content && Array.isArray(item.content)) {
+
       return {
         ...item,
         content: updateAnElement(item.content, action),
@@ -106,13 +128,15 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
       };
       return newEditorState;
     case "UPDATE_ELEMENT":
-      //perform your logic to update the element in the state
+      // Perform your logic to update the element in the state
       const updatedElements = updateAnElement(state.editor.elements, action);
-      const updatedEleemntIsSelected = state.editor.selectedElement.id === action.payload.elementDetails.id;
-      const updatedEditorStateWithUpdate: Editor = {
+
+      const UpdatedElementIsSelected = state.editor.selectedElement.id === action.payload.elementDetails.id;
+
+      const updatedEditorStateWithUpdate = {
         ...state.editor,
         elements: updatedElements,
-        selectedElement: updatedEleemntIsSelected
+        selectedElement: UpdatedElementIsSelected
           ? action.payload.elementDetails
           : {
               id: "",
@@ -122,21 +146,23 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
               type: null,
             },
       };
-      //update the history to icnlude the entire updateEditorsata
-      const updateHistoryWithUpdate: Editor[] = [
+
+      const updatedHistoryWithUpdate = [
         ...state.history.history.slice(0, state.history.currentIndex + 1),
-        { ...updatedEditorStateWithUpdate },
+        { ...updatedEditorStateWithUpdate }, // Save a copy of the updated state
       ];
-      const updateEditor: EditorState = {
+      const updatedEditor = {
         ...state,
         editor: updatedEditorStateWithUpdate,
         history: {
           ...state.history,
-          history: updateHistoryWithUpdate,
-          currentIndex: updateHistoryWithUpdate.length - 1,
+          history: updatedHistoryWithUpdate,
+          currentIndex: updatedHistoryWithUpdate.length - 1,
         },
       };
-      return updateEditor;
+
+      return updatedEditor;
+
     case "DELETE_ELEMENT":
       ///perofmr your logic to delete the element from the state
       const updatedEelementsAfterDelete: EditorElement[] = deleteAndElement(state.editor.elements, action);
@@ -264,6 +290,8 @@ export const EditorContext = createContext<{
 
 const EditorProvider = (props: EditorProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialState);
+
+
   return (
     <EditorContext.Provider
       value={{

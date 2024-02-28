@@ -22,7 +22,6 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
 
   useEffect(() => {
     if (containerRef.current) {
-      console.log(containerRef.current.scrollHeight);
       setContainerHeight(containerRef.current.scrollHeight);
     }
   }, [state.editor]);
@@ -129,9 +128,10 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
           <Droppable droppableId="droppable" isDropDisabled={state.editor.liveMode} isCombineEnabled={state.editor.liveMode}>
             {(provided, snapshot) => (
               <div
+              style={state.editor.elements[0].styles}
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className={cn("h-full", {
+                className={cn("h-full w-full", {
                   "p-8 ": !state.editor.liveMode,
                 })}
               >
@@ -139,12 +139,7 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
                   (state.editor.elements[0].content as Array<EditorElement>).map((item, index) => (
                     <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={state.editor.liveMode}>
                       {(provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          suppressContentEditableWarning={true}
-                        >
+                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="w-full flex justify-center" suppressContentEditableWarning={true}>
                           <Recursive element={item} />
                         </div>
                       )}

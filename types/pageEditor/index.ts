@@ -20,7 +20,7 @@ export type EditorElement <T = any> = {
   id: string;
   styles: CSSProperties;
   name: string;
-  type: string;
+  type: string | null;
   content: T
     
 };
@@ -32,7 +32,7 @@ export type TypeTextP = "Parrafo" | "Title" | "SubTitle";
 export type Editor = {
   liveMode: boolean;
   elements: EditorElement[];
-  selectedElement: EditorElement;
+  selectedElement: EditorElement 
   device: DeviceTypes;
   previewMode: boolean;
 };
@@ -75,6 +75,7 @@ export type ElementSidebar<T> = {
   group: "layout" | "elements" | "hero" | "twitch" | "youtube" | "discord" 
   defaultPayload: EditorElement<T>;
   component?: ({ element }: {element: EditorElement<T>}) => JSX.Element;
+  settings?: ({ element }: {element: EditorElement<T>}) => JSX.Element;
 };
 
 export interface Element {

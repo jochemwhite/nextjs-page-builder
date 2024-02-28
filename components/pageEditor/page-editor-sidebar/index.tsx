@@ -47,7 +47,9 @@ export default function PageEditorSidebar() {
                   </span>
                 </SheetDescription>
               </SheetHeader>
-              <SettingsTab />
+             {
+              state.editor.selectedElement.id && <SettingsTab />
+             }
             </TabsContent>
             <TabsContent value="Media">
               <MediaBucketTab  />

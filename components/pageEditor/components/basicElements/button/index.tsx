@@ -2,6 +2,7 @@ import { ElementSidebar, TypeTextP } from "@/types/pageEditor";
 import { TypeIcon } from "lucide-react";
 import { v4 } from "uuid";
 import ButtonElement from "./button";
+import settings from "./settings";
 
 export interface ButtonContent {
   innerText: string;
@@ -30,6 +31,7 @@ const button: ElementSidebar<ButtonContent> = {
     type: "button",
   },
   component: ButtonElement,
+  settings: settings,
 };
 
 export default button;

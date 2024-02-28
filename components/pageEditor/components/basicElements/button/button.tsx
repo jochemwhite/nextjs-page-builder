@@ -68,7 +68,7 @@ export default function ButtonElement({ element }: Props) {
 
   return (
     <Link
-      href={""}
+      href={href}
       target={openNewTab ? "_blank" : ""}
       className={cn(
         "flex items-center transition justify-between w-fit max-w-full no-underline text-base uppercase border-2 rounded-md leading-[46px] px-5 relative text-center tracking-wide *:mx-2",
