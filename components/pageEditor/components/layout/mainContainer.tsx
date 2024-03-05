@@ -73,24 +73,48 @@ export default function MainContainer({ element }: Props) {
       },
     });
   };
-
-
+  const handleDeleteElement = () => {
+    dispatch({
+      type: "DELETE_ELEMENT",
+      payload: {
+        elementDetails: state.editor.selectedElement,
+      },
+    });
+  };
   return (
     <div
+      style={styles}
       className={cn("relative  transition-all group", {
-        "max-w-full w-full": type === "container" || type === "2Col",
-        "h-full": type === "container" || type === "__body",
-        "overflow-auto": type === "__body",
-        "flex flex-col md:!flex-row": type === "2Col",
-        "p-4": !state.editor.liveMode,
+        'max-w-full w-full': type === 'container' || type === '2Col',
+        'h-fit': type === 'container',
+        'h-full': id === '__body',
+        'overflow-scroll ': type === '__body',
+        'flex flex-col md:!flex-row': type === '2Col',
+        '!border-blue-500':
+          state.editor.selectedElement.id === id &&
+          !state.editor.liveMode &&
+          state.editor.selectedElement.type !== '__body',
+        '!border-yellow-400 !border-4':
+          state.editor.selectedElement.id === id &&
+          !state.editor.liveMode &&
+          state.editor.selectedElement.type === '__body',
+        '!border-solid':
+          state.editor.selectedElement.id === id && !state.editor.liveMode,
+        'border-dashed border-[1px] border-slate-300 p-4': !state.editor.liveMode,
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
-      draggable={type !== "__body" && canDrag}
-      onDragStart={(e) => handleDragStart(e, "container")}
       onClick={handleOnCLickBody}
     >
+      {state.editor.selectedElement.id === element.id && !state.editor.liveMode && (
+        <Badge className="absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg">{state.editor.selectedElement.name}</Badge>
+      )}
       {Array.isArray(content) && content.map((childElement) => <Recursive element={childElement} key={childElement.id} />)}
+      {state.editor.selectedElement.id === element.id && !state.editor.liveMode && (
+        <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
+          <Trash className="cursor-pointer" size={16} onClick={() =>{handleDeleteElement()}} />
+        </div>
+      )}
     </div>
   );
 }

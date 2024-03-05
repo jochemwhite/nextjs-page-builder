@@ -20,7 +20,9 @@ const DiscordWidget: ElementSidebar<DiscordWidgetContent> = {
     },
     id: v4(),
     name: "Discord Widget",
-    styles: {},
+    styles: {
+      width: "fit-content",
+    },
     type: "discord-widget",
   },
   component: DiscordWidgetComponent,

@@ -10,8 +10,12 @@ const initialEditorState: EditorState["editor"] = {
       content: [],
       id: "__body",
       name: "Body",
-      styles: {},
-      type: "__body",
+      styles: {
+        height: "100%",
+        width: "100%",
+        
+      },
+      type: "container",
     },
   ],
   selectedElement: {
@@ -291,6 +295,9 @@ export const EditorContext = createContext<{
 const EditorProvider = (props: EditorProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialState);
 
+  useEffect(() => {
+    console.log("state.editor.elements", state.editor.elements);
+  }, [state.editor.elements]);
 
   return (
     <EditorContext.Provider

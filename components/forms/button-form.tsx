@@ -63,7 +63,7 @@ export default function ButtonForm({ devaultValues, updateContent }: Props) {
             <FormItem>
               <FormControl>
                 <>
-                  <div className="flex  justify-end">
+                  <div className="flex  justify-end gap-1.5">
                     <FormLabel>Icon</FormLabel>
                     <Checkbox checked={form.watch("showIcon")} onClick={() => form.setValue("showIcon", !form.getValues("showIcon"))} />
                   </div>

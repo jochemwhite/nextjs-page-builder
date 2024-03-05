@@ -35,14 +35,18 @@ export default function Recursive({ element }: Props) {
       },
     });
   };
+
+  if (element.type === "container" || element.type === "2Col" ) {
+    return <Component element={element} />;
+  }
+
   return (
     <div
       style={element.styles}
       onClick={handleOnClikBody}
-      className={cn("w-full  relative text-[16px] transition-all", {
-        "!border-blue-500": state.editor.selectedElement.id === element.id,
-        "!border-solid": state.editor.selectedElement.id === element.id,
-        "border-dashed border-[1px] p-[2px] m-[5px]  border-slate-300": !state.editor.liveMode,
+      className={cn("relative", {
+        "!border-blue-500": state.editor.selectedElement.id === element.id && !state.editor.liveMode,
+        "border-dashed border-[1px] border-slate-300 p-4": !state.editor.liveMode,
       })}
     >
       {state.editor.selectedElement.id === element.id && !state.editor.liveMode && (
@@ -51,7 +55,13 @@ export default function Recursive({ element }: Props) {
       <Component element={element} />
       {state.editor.selectedElement.id === element.id && !state.editor.liveMode && (
         <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
-          <Trash className="cursor-pointer" size={16} onClick={handleDeleteElement} />
+          <Trash
+            className="cursor-pointer"
+            size={16}
+            onClick={() => {
+              handleDeleteElement();
+            }}
+          />
         </div>
       )}
     </div>

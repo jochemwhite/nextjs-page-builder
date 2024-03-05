@@ -1,20 +1,15 @@
-import React, { MouseEventHandler, useEffect } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import ButtonForm from "@/components/forms/button-form";
+import { useEditor } from "@/providers/editor/editor-provider";
+import { ButtonSchema } from "@/schema/button";
 import { EditorElement } from "@/types/pageEditor";
 import { ButtonContent } from ".";
-import { useEditor } from "@/providers/editor/editor-provider";
-import { z } from "zod";
-import ButtonForm from "@/components/forms/button-form";
-import { ButtonSchema } from "@/schema/button";
 
 type Props = {
   element: EditorElement<ButtonContent>;
 };
 
 export default function settings({ element }: Props) {
-  const { state, dispatch } = useEditor();
+  const {  dispatch } = useEditor();
   const {
     content: { href, openNewTab, icon },
   } = element;

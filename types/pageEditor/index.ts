@@ -72,7 +72,7 @@ export type ElementSidebar<T> = {
   id: string;
   name: string;
   type: string;
-  group: "layout" | "elements" | "hero" | "twitch" | "youtube" | "discord" 
+  group: "layout" | "elements" | "hero" | "twitch" | "youtube" | "discord" | "onekingdom"
   defaultPayload: EditorElement<T>;
   component?: ({ element }: {element: EditorElement<T>}) => JSX.Element;
   settings?: ({ element }: {element: EditorElement<T>}) => JSX.Element;

@@ -9,6 +9,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { EditorElement, PageDetails } from "@/types/pageEditor";
 import MainContainer from "../components/layout/mainContainer";
 import Recursive from "./recursive";
+import clsx from "clsx";
 
 type Props = {
   liveMode?: boolean;
@@ -67,90 +68,30 @@ export default function PageEditor({ pageDetails, liveMode }: Props) {
       type: "TOGGLE_LIVE_MODE",
     });
   };
-  // a little function to help us with reordering the result
-  const reorder = (list: Array<EditorElement>, startIndex: number, endIndex: number) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
 
-    return result;
-  };
-  const onDragEnd = (result: any) => {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
 
-    const items = reorder(state.editor.elements[0].content as Array<EditorElement>, result.source.index, result.destination.index);
-    let prev: Array<EditorElement> = [...state.editor.elements];
-    prev[0].content = items;
-    dispatch({
-      type: "LOAD_DATA",
-      payload: {
-        elements: prev,
-        withLive: false,
-      },
-    });
-  };
 
   return (
     <div
-      onClick={handleClick}
-      className={cn("use-automation-zoom-in h-full overflow-y-auto mr-[385px] bg-background transition-all rounded-md relative ", {
-        "!p-0 !mr-0": state.editor.previewMode === true,
+      className={clsx("use-automation-zoom-in h-full pb-16  overflow-scroll mr-[385px] bg-background transition-all rounded-md", {
+        "!p-0 !mr-0": state.editor.previewMode === true || state.editor.liveMode === true,
         "!w-[850px]": state.editor.device === "Tablet",
-        "!w-[450px]": state.editor.device === "Mobile",
+        "!w-[420px]": state.editor.device === "Mobile",
         "w-full": state.editor.device === "Desktop",
       })}
+      onClick={handleClick}
     >
       {state.editor.previewMode && state.editor.liveMode && (
-        <Button variant="ghost" size="icon" className="size-6 bg-slate-600 p-[2px] fixed top-0 left-0 z-[100]" onClick={hanldeUnpreview}>
+        <Button variant={"ghost"} size={"icon"} className="w-6 h-6 bg-slate-600 p-[2px] fixed top-0 left-0 z-[100]" onClick={hanldeUnpreview}>
           <EyeOff />
         </Button>
       )}
-      {Array.isArray(state.editor.elements) && (
-        <div
-          className="w-full absolute "
-          style={{
-            height: containerHeight + 100,
-          }}
-        >
-          <MainContainer
-            element={{
-              ...state.editor.elements[0],
-              content: [],
-            }}
-          />
-        </div>
-      )}
-      <div ref={containerRef}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable" isDropDisabled={state.editor.liveMode} isCombineEnabled={state.editor.liveMode}>
-            {(provided, snapshot) => (
-              <div
-              style={state.editor.elements[0].styles}
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className={cn("h-full w-full", {
-                  "p-8 ": !state.editor.liveMode,
-                })}
-              >
-                {Array.isArray(state.editor.elements) &&
-                  (state.editor.elements[0].content as Array<EditorElement>).map((item, index) => (
-                    <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={state.editor.liveMode}>
-                      {(provided, snapshot) => (
-                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="w-full flex justify-center" suppressContentEditableWarning={true}>
-                          <Recursive element={item} />
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </div>
+      {Array.isArray(state.editor.elements) &&
+        state.editor.elements.map((childElement) => (
+     
+            <Recursive key={childElement.id} element={childElement} />
+     
+        ))}
     </div>
   );
 }
